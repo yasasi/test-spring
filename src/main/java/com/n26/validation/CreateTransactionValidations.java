@@ -22,6 +22,7 @@ public class CreateTransactionValidations {
         } catch (NumberFormatException ex) {
             throw new TransactionException(HttpStatus.UNPROCESSABLE_ENTITY);
         }
+
         if (transactionDto.getTimestamp().isAfter(LocalDateTime.now(ZoneId.of("UTC")))) {
             throw new TransactionException(HttpStatus.UNPROCESSABLE_ENTITY);
         } else if (LocalDateTime.now(ZoneId.of("UTC")).minusSeconds(TRANSACTION_PERIOD).isAfter(transactionDto.getTimestamp())) {

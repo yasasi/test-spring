@@ -21,16 +21,6 @@ public class Application {
     public static void main(String... args) {
         SpringApplication.run(Application.class, args);
     }
-    
-    @Bean
-    public ConcurrentHashMap<String, TransactionDto> transactionList() {
-        return new ConcurrentHashMap<String, TransactionDto>();
-    }
-
-    @Bean
-    public Statistics statistics(){
-        return new Statistics();
-    }
 
     @Bean
     public ConcurrentHashMap<UUID, Transaction> transactionMap(){

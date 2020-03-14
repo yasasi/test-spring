@@ -54,7 +54,7 @@ public class StatisticsServiceImpl implements StatisticsService {
         System.out.println("Refreshing transaction list...");
         transactionMap.entrySet().stream().forEach(tranKey-> {
             System.out.println("Refreshing transaction list...");
-            if(LocalDateTime.now(ZoneId.of("UTC")).minusSeconds(TRANSACTION_PERIOD).isBefore(transactionMap.get(tranKey).getTimestamp())){
+            if(LocalDateTime.now(ZoneId.of("UTC")).minusSeconds(TRANSACTION_PERIOD).isAfter(transactionMap.get(tranKey).getTimestamp())){
                 transactionMap.remove(tranKey);
                 System.out.println("remove expired transaction" + tranKey);
             }

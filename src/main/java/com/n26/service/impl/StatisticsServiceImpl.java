@@ -32,7 +32,7 @@ public class StatisticsServiceImpl implements StatisticsService {
         transactionMap.entrySet().stream()
                 .filter(trans ->
                         LocalDateTime.now(ZoneId.of("UTC")).minusSeconds(TRANSACTION_PERIOD).
-                                isAfter(trans.getValue().getTimestamp()))
+                                isBefore(trans.getValue().getTimestamp()))
                 .forEach(trans -> {
                     BigDecimal sum = response.getSum() !=null ? response.getSum() : BigDecimal.ZERO;
                     Long count = response.getCount() !=null ? response.getCount() : 0L;
@@ -45,7 +45,7 @@ public class StatisticsServiceImpl implements StatisticsService {
                     response.setMax(max.setScale(2, RoundingMode.HALF_UP));
                 });
 
-        if(response.getCount() > 0L) {
+        if(response.getCount() != null && response.getSum() !=null && response.getCount() > 0L) {
             response.setAvg(response.getSum().divide(BigDecimal.valueOf(response.getCount()), RoundingMode.HALF_UP).setScale(2, RoundingMode.HALF_UP));
         }
         return response;

@@ -32,7 +32,7 @@ public class TransactionServiceImpl implements TransactionService {
         BigDecimal amountInBigDec = new BigDecimal(transactionDto.getAmount());
 
         transaction.setAmount(amountInBigDec);
-        transaction.setTimestamp(transaction.getTimestamp());
+        transaction.setTimestamp(transactionDto.getTimestamp());
 
         transactionMap.put(UUID.randomUUID(), transaction);
     }

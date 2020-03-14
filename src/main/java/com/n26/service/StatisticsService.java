@@ -4,6 +4,6 @@ import com.n26.model.response.StatisticsResponse;
 
 public interface StatisticsService {
 
-    StatisticsResponse getStatistics();
+   StatisticsResponse getStatistics();
 
 }

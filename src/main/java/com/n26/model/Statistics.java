@@ -8,6 +8,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -20,6 +21,7 @@ import java.math.BigDecimal;
 @Setter
 @ToString
 public class Statistics {
+    private LocalDateTime timestamp;
     private BigDecimal sum;
     private BigDecimal avg;
     private BigDecimal max;

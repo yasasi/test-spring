@@ -1,8 +1,10 @@
 package com.n26.controller;
 
 import com.n26.model.response.StatisticsResponse;
+import com.n26.service.StatisticsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,15 +19,14 @@ public class StatisticController {
 
     private static final Logger logger = LoggerFactory.getLogger(StatisticController.class);
 
+    @Autowired
+    private StatisticsService statisticsService;
+
     @GetMapping
     @ResponseStatus(code = HttpStatus.ACCEPTED)
     public StatisticsResponse getStatistics() {
 
-        StatisticsResponse response = new StatisticsResponse();
-        response.setAvg(BigDecimal.TEN);
-        response.setMax(BigDecimal.valueOf(12.0));
-
-        return  response;
+        return  statisticsService.getStatistics();
     }
 
 }

@@ -7,4 +7,6 @@ public interface TransactionService {
 
     void addTransaction(TransactionDto transaction) throws TransactionException;
 
+    void deleteTransactions();
+
 }

@@ -11,7 +11,10 @@ import java.time.ZoneId;
 
 @Service
 public class CreateTransactionValidations {
-    public static long TRANSACTION_PERIOD = 60L;
+    public static final long TRANSACTION_PERIOD = 60L;
+
+    private CreateTransactionValidations() {
+    }
 
     public static final void validateTransaction(TransactionDto transactionDto) throws TransactionException {
         try {

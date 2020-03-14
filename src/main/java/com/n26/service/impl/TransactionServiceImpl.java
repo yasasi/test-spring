@@ -37,4 +37,9 @@ public class TransactionServiceImpl implements TransactionService {
         transactionMap.put(UUID.randomUUID(), transaction);
     }
 
+    @Override
+    public void deleteTransactions()  {
+        transactionMap.clear();
+    }
+
 }

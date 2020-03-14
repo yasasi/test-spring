@@ -1,9 +1,6 @@
 package com.n26.service.impl;
 
-import com.n26.dao.StatisticsRepository;
-import com.n26.model.Statistics;
 import com.n26.model.Transaction;
-import com.n26.model.request.TransactionDto;
 import com.n26.model.response.StatisticsResponse;
 import com.n26.service.StatisticsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,14 +12,10 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Map;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
 public class StatisticsServiceImpl implements StatisticsService {
-    public static long TRANSACTION_PERIOD = 6000L;
-
-    @Autowired
-    StatisticsRepository statisticsRepository;
+    public static final long TRANSACTION_PERIOD = 6000L;
 
     @Autowired
     public Map<UUID, Transaction> transactionMap;

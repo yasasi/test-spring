@@ -22,6 +22,9 @@ public class StatisticsServiceImpl implements StatisticsService {
     @Autowired
     StatisticsRepository statisticsRepository;
 
+    @Autowired
+    public Statistics statistics;
+
     public StatisticsResponse getStatistics() {
         Map<LocalDateTime, Statistics> statisticsMap = statisticsRepository.getTransactions();
 

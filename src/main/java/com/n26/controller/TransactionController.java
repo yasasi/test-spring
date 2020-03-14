@@ -1,11 +1,9 @@
 package com.n26.controller;
 
 import com.n26.model.request.TransactionDto;
-import com.n26.model.response.TransactionResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,7 +11,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
-import java.math.BigDecimal;
 
 @RestController
 @RequestMapping("/transactions")
@@ -26,17 +23,6 @@ public class TransactionController {
     public void createTranscation(@Valid @RequestBody TransactionDto transaction) {
         logger.info("Request received to create a Transaction [{}]", transaction);
 
-    }
-
-    @GetMapping
-    @ResponseStatus(code = HttpStatus.ACCEPTED)
-    public TransactionResponse getRosters() {
-
-        TransactionResponse response = new TransactionResponse();
-        response.setAvg(BigDecimal.TEN);
-        response.setMax(BigDecimal.valueOf(12.0));
-
-        return  response;
     }
 
 }

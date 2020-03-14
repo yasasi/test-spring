@@ -1,4 +1,4 @@
-package com.n26.model.response;
+package com.n26.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -8,7 +8,6 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -20,7 +19,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @ToString
-public class TransactionResponse {
+public class Statistics {
     private BigDecimal sum;
     private BigDecimal avg;
     private BigDecimal max;

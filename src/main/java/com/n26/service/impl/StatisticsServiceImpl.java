@@ -2,6 +2,7 @@ package com.n26.service.impl;
 
 import com.n26.dao.StatisticsRepository;
 import com.n26.model.Statistics;
+import com.n26.model.Transaction;
 import com.n26.model.request.TransactionDto;
 import com.n26.model.response.StatisticsResponse;
 import com.n26.service.StatisticsService;
@@ -13,33 +14,33 @@ import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Map;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
 public class StatisticsServiceImpl implements StatisticsService {
-    public static int TRANSACTION_PERIOD = 60000;
+    public static long TRANSACTION_PERIOD = 6000L;
 
     @Autowired
     StatisticsRepository statisticsRepository;
 
     @Autowired
-    public Statistics statistics;
+    public Map<UUID, Transaction> transactionMap;
 
     public StatisticsResponse getStatistics() {
-        Map<LocalDateTime, Statistics> statisticsMap = statisticsRepository.getTransactions();
-
         StatisticsResponse response = new StatisticsResponse();
-        statisticsMap.entrySet().stream()
-                .filter(stats ->
-                        LocalDateTime.now(ZoneId.of("UTC")).getSecond() - stats.getKey().getSecond() < TRANSACTION_PERIOD)
-                .forEach(s -> {
+        transactionMap.entrySet().stream()
+                .filter(trans ->
+                        LocalDateTime.now(ZoneId.of("UTC")).minusSeconds(TRANSACTION_PERIOD).
+                                isAfter(trans.getValue().getTimestamp()))
+                .forEach(trans -> {
                     BigDecimal sum = response.getSum() !=null ? response.getSum() : BigDecimal.ZERO;
                     Long count = response.getCount() !=null ? response.getCount() : 0L;
-                    response.setSum(sum.add(s.getValue().getSum()).setScale(2, RoundingMode.HALF_UP));
+                    response.setSum(sum.add(trans.getValue().getAmount()).setScale(2, RoundingMode.HALF_UP));
                     response.setCount(count+1L);
 
-                    BigDecimal min = response.getMin() !=null ? response.getMin().min(s.getValue().getMin()) : s.getValue().getMin();
-                    BigDecimal max = response.getMax() !=null ? response.getMax().max(s.getValue().getMax()) : s.getValue().getMax();
+                    BigDecimal min = response.getMin() !=null ? response.getMin().min(trans.getValue().getAmount()) : trans.getValue().getAmount();
+                    BigDecimal max = response.getMax() !=null ? response.getMax().max(trans.getValue().getAmount()) : trans.getValue().getAmount();
                     response.setMin(min.setScale(2, RoundingMode.HALF_UP));
                     response.setMax(max.setScale(2, RoundingMode.HALF_UP));
                 });

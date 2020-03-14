@@ -1,6 +1,7 @@
 package com.n26;
 
 import com.n26.model.Statistics;
+import com.n26.model.Transaction;
 import com.n26.model.request.TransactionDto;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -8,6 +9,8 @@ import org.springframework.context.annotation.Bean;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 @SpringBootApplication
@@ -30,5 +33,10 @@ public class Application {
     @Bean
     public Statistics statistics(){
         return new Statistics();
+    }
+
+    @Bean
+    public ConcurrentHashMap<UUID, Transaction> transactionMap(){
+        return new ConcurrentHashMap<>();
     }
 }

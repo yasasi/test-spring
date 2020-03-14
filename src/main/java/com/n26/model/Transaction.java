@@ -1,4 +1,4 @@
-package com.n26.model.request;
+package com.n26.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -8,6 +8,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 /**
@@ -20,10 +21,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @ToString
-public class TransactionDto {
-    @NotNull
-    private String amount;
-
-    @NotNull
+public class Transaction {
+    private BigDecimal amount;
     private LocalDateTime timestamp;
 }

@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.math.BigDecimal;
-
 @RestController
 @RequestMapping("/statistics")
 public class StatisticController {
@@ -25,7 +23,6 @@ public class StatisticController {
     @GetMapping
     @ResponseStatus(code = HttpStatus.ACCEPTED)
     public StatisticsResponse getStatistics() {
-
         return  statisticsService.getStatistics();
     }
 

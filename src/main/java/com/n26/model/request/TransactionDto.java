@@ -20,7 +20,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @ToString
-public class TransactionDto {
+public class    TransactionDto {
     private String amount;
     private LocalDateTime timestamp;
 }

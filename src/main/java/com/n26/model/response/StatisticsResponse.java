@@ -1,5 +1,6 @@
 package com.n26.model.response;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -23,9 +24,17 @@ import java.time.LocalDateTime;
 @Setter
 @ToString
 public class StatisticsResponse {
-    private String sum = "0";
-    private String avg = "0";
-    private String max = "0";
-    private String min = "0";
-    private String count = "0";
+    @JsonFormat(shape= JsonFormat.Shape.STRING)
+    private BigDecimal sum = BigDecimal.ZERO.setScale(2, RoundingMode.HALF_UP);
+
+    @JsonFormat (shape= JsonFormat.Shape.STRING)
+    private BigDecimal avg = BigDecimal.ZERO.setScale(2, RoundingMode.HALF_UP);;
+
+    @JsonFormat (shape= JsonFormat.Shape.STRING)
+    private BigDecimal max = BigDecimal.ZERO.setScale(2, RoundingMode.HALF_UP);
+
+    @JsonFormat (shape= JsonFormat.Shape.STRING)
+    private BigDecimal min = BigDecimal.ZERO.setScale(2, RoundingMode.HALF_UP);
+
+    private Long count = 0L;
 }

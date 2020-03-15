@@ -56,7 +56,7 @@ public class StatisticsControllerTest {
         mvc.perform(get("/statistics")
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(content().string("{\"sum\":300,\"avg\":null,\"max\":null,\"min\":100,\"count\":null}"))
+                .andExpect(content().string("{\"sum\":\"300\",\"avg\":null,\"max\":null,\"min\":\"100\",\"count\":null}"))
                 .andExpect(status().isOk());
     }
 

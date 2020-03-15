@@ -20,7 +20,7 @@ public class TransactionServiceImpl implements TransactionService {
     private static final Logger logger = LoggerFactory.getLogger(TransactionServiceImpl.class);
 
     @Autowired
-    public Map<String, Transaction> transactionMap;
+    public Map<UUID, Transaction> transactionMap;
 
     @Override
     public void addTransaction(TransactionDto transactionDto) throws TransactionException {
@@ -34,7 +34,7 @@ public class TransactionServiceImpl implements TransactionService {
         transaction.setAmount(amountInBigDec);
         transaction.setTimestamp(transactionDto.getTimestamp());
 
-        transactionMap.put(UUID.randomUUID().toString(), transaction);
+        transactionMap.put(UUID.randomUUID(), transaction);
     }
 
     @Override

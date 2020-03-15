@@ -36,8 +36,8 @@ public class StatisticsServiceImpl implements StatisticsService {
                     response.setSum((sum.add(trans.getValue().getAmount()).setScale(2, RoundingMode.HALF_UP)).toString());
                     response.setCount(Long.toString(count+1L));
 
-                    BigDecimal min = response.getMin() !=null ? new BigDecimal(response.getMin()).min(trans.getValue().getAmount()) : trans.getValue().getAmount();
-                    BigDecimal max = response.getMax() !=null ? new BigDecimal(response.getMax()).max(trans.getValue().getAmount()) : trans.getValue().getAmount();
+                    BigDecimal min = response.getMin() != "0" ? new BigDecimal(response.getMin()).min(trans.getValue().getAmount()) : trans.getValue().getAmount();
+                    BigDecimal max = response.getMax() != "0" ? new BigDecimal(response.getMax()).max(trans.getValue().getAmount()) : trans.getValue().getAmount();
                     response.setMin((min.setScale(2, RoundingMode.HALF_UP).toString()));
                     response.setMax((max.setScale(2, RoundingMode.HALF_UP)).toString());
                 });

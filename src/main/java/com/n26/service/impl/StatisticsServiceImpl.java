@@ -15,7 +15,7 @@ import java.util.UUID;
 
 @Service
 public class StatisticsServiceImpl implements StatisticsService {
-    public static final long TRANSACTION_PERIOD = 6000L;
+    public static final long TRANSACTION_PERIOD = 60L;
 
     @Autowired
     public Map<UUID, Transaction> transactionMap;
@@ -24,8 +24,8 @@ public class StatisticsServiceImpl implements StatisticsService {
         StatisticsResponse response = new StatisticsResponse();
         transactionMap.entrySet().stream()
                 .filter(trans ->
-                        LocalDateTime.now(ZoneId.of("UTC")).minusSeconds(TRANSACTION_PERIOD).
-                                isBefore(trans.getValue().getTimestamp()))
+                        trans.getValue().getTimestamp().
+                                isAfter(LocalDateTime.now(ZoneId.of("UTC")).minusSeconds(TRANSACTION_PERIOD)))
                 .forEach(trans -> {
                     BigDecimal sum = response.getSum() !=null ? response.getSum() : BigDecimal.ZERO;
                     Long count = response.getCount() !=null ? response.getCount() : 0L;

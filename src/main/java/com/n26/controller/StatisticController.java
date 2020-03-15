@@ -21,7 +21,7 @@ public class StatisticController {
     private StatisticsService statisticsService;
 
     @GetMapping
-    @ResponseStatus(code = HttpStatus.ACCEPTED)
+    @ResponseStatus(code = HttpStatus.OK)
     public StatisticsResponse getStatistics() {
         return  statisticsService.getStatistics();
     }

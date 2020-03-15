@@ -23,7 +23,7 @@ public class Application {
     }
 
     @Bean
-    public ConcurrentHashMap<UUID, Transaction> transactionMap(){
+    public ConcurrentHashMap<String, Transaction> transactionMap(){
         return new ConcurrentHashMap<>();
     }
 }

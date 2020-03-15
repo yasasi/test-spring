@@ -20,10 +20,10 @@ import java.util.UUID;
 public class StatisticsServiceImpl implements StatisticsService {
     private static final Logger logger = LoggerFactory.getLogger(StatisticsServiceImpl.class);
 
-    public static final long TRANSACTION_PERIOD = 6000L;
+    public static final long TRANSACTION_PERIOD = 60L;
 
     @Autowired
-    public Map<UUID, Transaction> transactionMap;
+    public Map<String, Transaction> transactionMap;
 
     public StatisticsResponse getStatistics() {
         StatisticsResponse response = new StatisticsResponse();
@@ -52,11 +52,11 @@ public class StatisticsServiceImpl implements StatisticsService {
     @Scheduled(fixedDelay=5000)
     public void refreshTransactions() {
         System.out.println("Refreshing transaction list...");
-        transactionMap.entrySet().stream().forEach(tranKey-> {
+        transactionMap.entrySet().stream().forEach(t-> {
             System.out.println("Refreshing transaction list...");
-            if(LocalDateTime.now(ZoneId.of("UTC")).minusSeconds(TRANSACTION_PERIOD).isAfter(transactionMap.get(tranKey).getTimestamp())){
-                transactionMap.remove(tranKey);
-                System.out.println("remove expired transaction" + tranKey);
+            if( LocalDateTime.now(ZoneId.of("UTC")).minusSeconds(TRANSACTION_PERIOD).isAfter(t.getValue().getTimestamp())){
+                transactionMap.remove(t.getKey());
+                System.out.println("remove expired transaction" + t.getKey());
             }
         });
     }

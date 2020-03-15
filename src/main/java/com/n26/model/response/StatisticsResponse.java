@@ -23,9 +23,9 @@ import java.time.LocalDateTime;
 @Setter
 @ToString
 public class StatisticsResponse {
-    private BigDecimal sum;
-    private BigDecimal avg;
-    private BigDecimal max;
-    private BigDecimal min;
-    private Long count;
+    private String sum = "0";
+    private String avg = "0";
+    private String max = "0";
+    private String min = "0";
+    private String count = "0";
 }

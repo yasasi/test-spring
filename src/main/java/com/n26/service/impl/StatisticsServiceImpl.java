@@ -31,19 +31,19 @@ public class StatisticsServiceImpl implements StatisticsService {
                         trans.getValue().getTimestamp().
                                 isAfter(LocalDateTime.now(ZoneId.of("UTC")).minusSeconds(TRANSACTION_PERIOD)))
                 .forEach(trans -> {
-                    BigDecimal sum = response.getSum() !=null ? response.getSum() : BigDecimal.ZERO;
-                    Long count = response.getCount() !=null ? response.getCount() : 0L;
-                    response.setSum(sum.add(trans.getValue().getAmount()).setScale(2, RoundingMode.HALF_UP));
-                    response.setCount(count+1L);
+                    BigDecimal sum = response.getSum() !=null ? new BigDecimal(response.getSum()) : BigDecimal.ZERO;
+                    Long count = response.getCount() !=null ? Long.parseLong(response.getCount()) : 0L;
+                    response.setSum((sum.add(trans.getValue().getAmount()).setScale(2, RoundingMode.HALF_UP)).toString());
+                    response.setCount(Long.toString(count+1L));
 
-                    BigDecimal min = response.getMin() !=null ? response.getMin().min(trans.getValue().getAmount()) : trans.getValue().getAmount();
-                    BigDecimal max = response.getMax() !=null ? response.getMax().max(trans.getValue().getAmount()) : trans.getValue().getAmount();
-                    response.setMin(min.setScale(2, RoundingMode.HALF_UP));
-                    response.setMax(max.setScale(2, RoundingMode.HALF_UP));
+                    BigDecimal min = response.getMin() !=null ? new BigDecimal(response.getMin()).min(trans.getValue().getAmount()) : trans.getValue().getAmount();
+                    BigDecimal max = response.getMax() !=null ? new BigDecimal(response.getMax()).max(trans.getValue().getAmount()) : trans.getValue().getAmount();
+                    response.setMin((min.setScale(2, RoundingMode.HALF_UP).toString()));
+                    response.setMax((max.setScale(2, RoundingMode.HALF_UP)).toString());
                 });
 
-        if(response.getCount() != null && response.getSum() !=null && response.getCount() > 0L) {
-            response.setAvg(response.getSum().divide(BigDecimal.valueOf(response.getCount()), RoundingMode.HALF_UP).setScale(2, RoundingMode.HALF_UP));
+        if(response.getCount() != null && response.getSum() !=null && Long.parseLong(response.getCount()) > 0L) {
+            response.setAvg(new BigDecimal(response.getSum()).divide(new BigDecimal(response.getCount()), RoundingMode.HALF_UP).setScale(2, RoundingMode.HALF_UP).toString());
         }
         return response;
     }

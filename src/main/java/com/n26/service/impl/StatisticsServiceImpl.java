@@ -3,7 +3,10 @@ package com.n26.service.impl;
 import com.n26.model.Transaction;
 import com.n26.model.response.StatisticsResponse;
 import com.n26.service.StatisticsService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -16,6 +19,7 @@ import java.util.UUID;
 @Service
 public class StatisticsServiceImpl implements StatisticsService {
     public static final long TRANSACTION_PERIOD = 60L;
+    private static final Logger logger = LoggerFactory.getLogger(StatisticsServiceImpl.class);
 
     @Autowired
     public Map<UUID, Transaction> transactionMap;
@@ -43,5 +47,18 @@ public class StatisticsServiceImpl implements StatisticsService {
         }
         return response;
     }
+
+    @Scheduled(fixedDelay=5000)
+    public void refreshTransactions() {
+        System.out.println("Refreshing transaction list...");
+        transactionMap.entrySet().stream().forEach(t-> {
+            System.out.println("Refreshing transaction list...");
+            if( LocalDateTime.now(ZoneId.of("UTC")).minusSeconds(TRANSACTION_PERIOD).isAfter(t.getValue().getTimestamp())){
+                transactionMap.remove(t.getKey());
+                System.out.println("remove expired transaction" + t.getKey());
+            }
+        });
+    }
+
 
 }

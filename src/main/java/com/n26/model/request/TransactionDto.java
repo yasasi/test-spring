@@ -25,5 +25,5 @@ public class TransactionDto {
     private String amount;
 
     @NotNull
-    private LocalDateTime timestamp;
+    private String timestamp;
 }

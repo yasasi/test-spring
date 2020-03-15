@@ -14,6 +14,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Map;
 import java.util.UUID;
 
@@ -40,9 +42,11 @@ public class TransactionServiceTest {
     public void testAddTransaction() throws TransactionException {
         Assert.assertEquals(0, transactionMap.values().size());
 
-        LocalDateTime time = LocalDateTime.now(ZoneId.of("UTC")).minusSeconds(20);
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss:SSSZ").withZone(ZoneId.of("UTC"));
+
         TransactionDto transactionDto = TransactionDto.builder().amount("200")
-                .timestamp(time).build();
+                .timestamp(getDate(ZonedDateTime.now(ZoneId.of("UTC")).minusSeconds(20))).build();
+
         transactionService.addTransaction(transactionDto);
         Assert.assertEquals(1, transactionMap.values().size());
     }
@@ -51,9 +55,8 @@ public class TransactionServiceTest {
     public void testAddTransactionWithFutureDate() throws TransactionException {
         Assert.assertEquals(0, transactionMap.values().size());
 
-        LocalDateTime time = LocalDateTime.now(ZoneId.of("UTC")).plusDays(1);
         TransactionDto transactionDto = TransactionDto.builder().amount("200")
-                .timestamp(time).build();
+                .timestamp(getDate(ZonedDateTime.now(ZoneId.of("UTC")).plusDays(1))).build();
         transactionService.addTransaction(transactionDto);
     }
 
@@ -61,9 +64,8 @@ public class TransactionServiceTest {
     public void testAddTransactionWithInvalidAmount() throws TransactionException {
         Assert.assertEquals(0, transactionMap.values().size());
 
-        LocalDateTime time = LocalDateTime.now(ZoneId.of("UTC")).minusSeconds(20);
         TransactionDto transactionDto = TransactionDto.builder().amount("hello")
-                .timestamp(time).build();
+                .timestamp(getDate(ZonedDateTime.now(ZoneId.of("UTC")).minusSeconds(20))).build();
         transactionService.addTransaction(transactionDto);
     }
 
@@ -72,9 +74,8 @@ public class TransactionServiceTest {
     public void testAddTransactionWithTimeIsNotLessThan60Sec() throws TransactionException {
         Assert.assertEquals(0, transactionMap.values().size());
 
-        LocalDateTime time = LocalDateTime.now(ZoneId.of("UTC")).minusSeconds(65);
         TransactionDto transactionDto = TransactionDto.builder().amount("200")
-                .timestamp(time).build();
+                .timestamp(getDate(ZonedDateTime.now(ZoneId.of("UTC")).minusSeconds(65))).build();
         transactionService.addTransaction(transactionDto);
     }
 
@@ -85,6 +86,11 @@ public class TransactionServiceTest {
 
         transactionService.deleteTransactions();
         Assert.assertEquals(0, transactionMap.values().size());
+    }
+
+    private String getDate (ZonedDateTime dateTime) {
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ISO_DATE_TIME.withZone(ZoneId.of("UTC"));
+        return dateTime.format(dateTimeFormatter);
     }
 
 }

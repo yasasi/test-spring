@@ -5,7 +5,7 @@ import com.n26.model.request.TransactionDto;
 
 public interface TransactionService {
 
-    void addTransaction(TransactionDto transaction) throws TransactionException;
+    void addTransaction(TransactionDto transactionDto) throws TransactionException;
 
     void deleteTransactions();
 

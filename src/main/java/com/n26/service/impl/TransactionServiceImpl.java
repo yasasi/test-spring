@@ -4,6 +4,7 @@ import com.n26.exception.TransactionException;
 import com.n26.model.Transaction;
 import com.n26.model.request.TransactionDto;
 import com.n26.service.TransactionService;
+import com.n26.util.DateUtil;
 import com.n26.validation.CreateTransactionValidations;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Map;
 import java.util.UUID;
 
@@ -32,7 +36,7 @@ public class TransactionServiceImpl implements TransactionService {
         BigDecimal amountInBigDec = new BigDecimal(transactionDto.getAmount());
 
         transaction.setAmount(amountInBigDec);
-        transaction.setTimestamp(transactionDto.getTimestamp());
+        transaction.setTimestamp(DateUtil.getDateFromString(transactionDto.getTimestamp()));
 
         transactionMap.put(UUID.randomUUID(), transaction);
     }

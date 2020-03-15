@@ -50,7 +50,7 @@ public class StatisticsServiceTest {
         Assert.assertEquals(BigDecimal.ZERO.setScale(2), response.getSum());
     }
 
-    //@Test
+    @Test
     public void testGetStatisticsPastValues() {
         testUtils.addTransactions(65);
         StatisticsResponse response = statisticsService.getStatistics();

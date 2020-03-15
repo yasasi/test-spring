@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Map;
+import java.time.ZoneId;
 import java.util.UUID;
 
 @Component
@@ -17,9 +18,9 @@ public class TestUtils {
 
     public void addTransactions (int seconds) {
         Transaction transaction1 = Transaction.builder().amount(BigDecimal.valueOf(200)).
-                timestamp(LocalDateTime.now().minusSeconds(seconds)).build();
+                timestamp(LocalDateTime.now(ZoneId.of("UTC")).minusSeconds(seconds)).build();
         Transaction transaction2 = Transaction.builder().amount(BigDecimal.valueOf(100)).
-                timestamp(LocalDateTime.now().minusSeconds(seconds)).build();
+                timestamp(LocalDateTime.now(ZoneId.of("UTC")).minusSeconds(seconds)).build();
         transactionMap.put(UUID.randomUUID(),transaction1);
         transactionMap.put(UUID.randomUUID(),transaction2);
     }

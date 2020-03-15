@@ -8,10 +8,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-import javax.validation.Valid;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.time.LocalDateTime;
+
 
 /**
  * <p>
@@ -28,7 +27,7 @@ public class StatisticsResponse {
     private BigDecimal sum = BigDecimal.ZERO.setScale(2, RoundingMode.HALF_UP);
 
     @JsonFormat (shape= JsonFormat.Shape.STRING)
-    private BigDecimal avg = BigDecimal.ZERO.setScale(2, RoundingMode.HALF_UP);;
+    private BigDecimal avg = BigDecimal.ZERO.setScale(2, RoundingMode.HALF_UP);
 
     @JsonFormat (shape= JsonFormat.Shape.STRING)
     private BigDecimal max = BigDecimal.ZERO.setScale(2, RoundingMode.HALF_UP);

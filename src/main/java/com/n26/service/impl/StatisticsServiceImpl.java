@@ -59,7 +59,6 @@ public class StatisticsServiceImpl implements StatisticsService {
 
     @Scheduled(fixedDelay=5000)
     public void refreshTransactions() {
-        logger.info("Refreshing the transactions...");
         transactionMap.entrySet().stream().forEach(t-> {
             logger.info("Refreshing transaction list...");
             if( LocalDateTime.now(ZoneId.of("UTC")).minusSeconds(TRANSACTION_PERIOD).isAfter(t.getValue().getTimestamp())){
